@@ -1,0 +1,15 @@
+node_modules
+dist
+.DS_Store
+*.log
+
+# PRIVACY: never commit student data or photographs
+private/
+sample/
+*.xlsx
+*.xls
+*.csv
+photos/
+student-photos/
+*.ogg
+graphify-out/

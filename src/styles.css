@@ -1,0 +1,22 @@
+body { background: #f4f6fb; }
+.app-shell { display: flex; min-height: 100vh; }
+.sidebar { width: 230px; background: #1f2a44; color: #fff; flex-shrink: 0; padding: 16px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.sidebar h6 { padding: 0 20px 12px; margin: 0; font-weight: 700; letter-spacing: .5px; border-bottom: 1px solid rgba(255,255,255,.15); }
+.sidebar a { display: block; padding: 10px 20px; color: #cfd6ea; text-decoration: none; font-size: 15px; }
+.sidebar a:hover { background: rgba(255,255,255,.08); color: #fff; }
+.sidebar a.active { background: #ff0dff; color: #fff; font-weight: 600; }
+.main { flex: 1; padding: 24px; min-width: 0; }
+.stat-card { border: 0; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.stat-card .num { font-size: 34px; font-weight: 700; }
+.table-wrap { max-height: 65vh; overflow: auto; background: #fff; border-radius: 8px; }
+.table-wrap thead th { position: sticky; top: 0; background: #eef1f8; z-index: 1; }
+.modal-backdrop-custom { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 1050; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.modal-box { background: #fff; border-radius: 10px; width: 100%; max-width: 760px; max-height: 92vh; overflow: auto; padding: 20px; }
+.card-scaler { transform-origin: top left; }
+.preview-stage { background: #dfe3ee; border-radius: 10px; padding: 16px; display: inline-block; }
+@media (max-width: 800px) {
+  .app-shell { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: static; display: flex; flex-wrap: wrap; padding: 8px; }
+  .sidebar h6 { width: 100%; }
+  .sidebar a { padding: 8px 12px; }
+}

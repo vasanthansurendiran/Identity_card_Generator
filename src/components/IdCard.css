@@ -1,0 +1,29 @@
+.id-card {
+  position: relative; width: 1083px; height: 1693px; background: #fff; overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif; color: #000; box-sizing: border-box;
+}
+.id-card * { box-sizing: border-box; }
+.id-card .ic-header { position: absolute; left: 0; top: 0; width: 1083px; height: 373px; background: var(--head); }
+.ic-logo { position: absolute; left: 70px; top: 25px; width: 285px; height: 243px; object-fit: contain; }
+.ic-school { position: absolute; left: 360px; top: 40px; width: 640px; height: 235px; line-height: 235px; text-align: center; color: #fff; font-weight: 900; }
+.ic-addr1 { position: absolute; left: 90px; top: 268px; width: 900px; height: 52px; line-height: 52px; text-align: center; color: #ffeb00; font-weight: 700; }
+.ic-addr2 { position: absolute; left: 130px; top: 318px; width: 840px; height: 52px; line-height: 52px; display: flex; justify-content: space-between; color: #ffeb00; font-weight: 700; }
+.ic-addr2 > div { height: 52px; line-height: 52px; }
+.ic-title { position: absolute; left: 60px; top: 405px; width: 570px; text-align: center; font-size: 42px; font-weight: 700; color: #0a0ac8; }
+.ic-year { position: absolute; left: 641px; top: 418px; width: 370px; text-align: center; font-size: 44px; font-weight: 700; color: var(--accent); }
+.ic-photo { position: absolute; left: 115px; top: 511px; width: 438px; height: 537px; background: #e6e6e6; border: 2px solid #777; box-shadow: 4px 4px 8px rgba(0,0,0,.4); overflow: hidden; }
+.ic-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+.ic-nophoto { display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; color: #888; font-size: 40px; font-weight: 700; }
+.ic-box { position: absolute; left: 641px; width: 370px; height: 90px; line-height: 90px; text-align: center; background: var(--accent); color: #fff; font-weight: 700; border-radius: 12px; padding: 0 8px; }
+.ic-icon { position: absolute; height: auto; }
+.ic-info { position: absolute; left: 755px; width: 270px; height: 60px; line-height: 60px; font-weight: 700; }
+.ic-info.blue { color: #0a0ac8; }
+.ic-info.red { color: #b70000; }
+.ic-name { position: absolute; left: 60px; top: 1065px; width: 570px; height: 80px; line-height: 80px; text-align: center; font-weight: 800; color: var(--accent); font-family: 'Arial Narrow', 'Roboto Condensed', Arial, sans-serif; letter-spacing: -1px; }
+.ic-addrlabel { position: absolute; left: 110px; top: 1188px; font-size: 38px; font-weight: 700; color: #1a6b00; line-height: 44px; }
+.ic-parent { position: absolute; left: 100px; top: 1240px; width: 520px; height: 46px; line-height: 46px; font-weight: 700; color: #0a14d0; }
+.ic-address { position: absolute; left: 103px; top: 1285px; width: 480px; height: 135px; line-height: 1.25; color: #000; }
+.ic-phone { position: absolute; left: 140px; top: 1548px; width: 580px; height: 66px; line-height: 66px; font-weight: 700; color: #b70000; }
+.ic-footer { position: absolute; left: 80px; top: 1612px; width: 600px; height: 36px; line-height: 36px; color: #999; font-weight: 700; }
+.ic-sign { position: absolute; left: 765px; top: 1430px; width: 215px; height: 115px; object-fit: contain; }
+.ic-principal { position: absolute; left: 740px; top: 1555px; width: 270px; text-align: center; font-size: 38px; font-weight: 700; color: #0a0ac8; }
