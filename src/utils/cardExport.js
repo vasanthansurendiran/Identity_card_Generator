@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client';
 import { toPng, toJpeg } from 'html-to-image';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import jsPDF from 'jspdf';
 import IdCard from '../components/IdCard.jsx';
 import { CARD_W, CARD_H, A4, computeLayout, composePage } from './sheetLayout.js';
 import { cardFileBase } from './validate.js';
@@ -101,7 +100,7 @@ export async function downloadSheets(students, getPhoto, settings, perSheet, out
   const layout = computeLayout(perSheet, settings.cardWidthMm, opts);
   const r = createRenderer();
   const pageBlobs = [];
-  const pdf = outFormat === 'pdf' ? new jsPDF({ unit: 'mm', format: 'a4' }) : null;
+  const pdf = outFormat === 'pdf' ? new (await import('jspdf')).default({ unit: 'mm', format: 'a4' }) : null;
   const done = [];
   let pageNo = 0;
   try {

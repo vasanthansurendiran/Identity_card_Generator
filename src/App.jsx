@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import Dashboard from './pages/Dashboard.jsx';
-import ImportExcel from './pages/ImportExcel.jsx';
-import ManualEntry from './pages/ManualEntry.jsx';
-import StudentRecords from './pages/StudentRecords.jsx';
-import CardPreview from './pages/CardPreview.jsx';
-import GenerateCards from './pages/GenerateCards.jsx';
-import SchoolSettings from './pages/SchoolSettings.jsx';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
+
+// Pages load on demand so the first paint stays small.
+const Dashboard = lazy(() => import('./pages/Dashboard.jsx'));
+const ImportExcel = lazy(() => import('./pages/ImportExcel.jsx'));
+const ManualEntry = lazy(() => import('./pages/ManualEntry.jsx'));
+const StudentRecords = lazy(() => import('./pages/StudentRecords.jsx'));
+const CardPreview = lazy(() => import('./pages/CardPreview.jsx'));
+const GenerateCards = lazy(() => import('./pages/GenerateCards.jsx'));
+const SchoolSettings = lazy(() => import('./pages/SchoolSettings.jsx'));
 
 const PAGES = [
   ['dashboard', 'Dashboard', Dashboard],
@@ -39,7 +42,11 @@ export default function App() {
           Data stays in your browser. Nothing is uploaded.
         </div>
       </nav>
-      <main className="main"><Current /></main>
+      <main className="main">
+        <ErrorBoundary key={page}>
+          <Suspense fallback={<div className="text-muted p-3">Loading…</div>}><Current /></Suspense>
+        </ErrorBoundary>
+      </main>
     </div>
   );
 }

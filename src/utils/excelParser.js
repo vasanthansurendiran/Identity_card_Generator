@@ -1,4 +1,5 @@
 import * as XLSX from 'xlsx';
+import { extractEmbeddedPhotos } from './embeddedPhotos.js';
 
 export const FIELDS = ['class', 'admission', 'name', 'blood', 'dob', 'parent', 'cell', 'bus', 'address', 'photo'];
 
@@ -37,11 +38,14 @@ function cellToString(v) {
 }
 
 /** Parse an .xlsx/.xls ArrayBuffer into student records. Never throws on empty cells. */
-export function parseExcel(arrayBuffer) {
+export async function parseExcel(arrayBuffer) {
   const wb = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
   const sheetName = wb.SheetNames[0];
-  if (!sheetName) return { students: [], missingColumns: FIELDS, unknownColumns: [], sheetName: '' };
-  const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { defval: '', raw: true });
+  if (!sheetName) return { students: [], missingColumns: FIELDS, unknownColumns: [], sheetName: '', embedded: {} };
+  const sheet = wb.Sheets[sheetName];
+  // blankrows keeps rows aligned with the sheet so pictures can be matched by row.
+  const rows = XLSX.utils.sheet_to_json(sheet, { defval: '', raw: true, blankrows: true });
+  const firstDataRow = sheet['!ref'] ? XLSX.utils.decode_range(sheet['!ref']).s.r + 1 : 1;
 
   const headers = rows.length ? Object.keys(rows[0]) : [];
   const headerMap = {};
@@ -54,13 +58,21 @@ export function parseExcel(arrayBuffer) {
   const found = Object.values(headerMap);
   const missingColumns = FIELDS.filter((f) => !found.includes(f));
 
+  // Pictures embedded in the sheet (SheetJS ignores them). Prefer the PHOTO column.
+  const photoHeader = Object.keys(headerMap).find((h) => headerMap[h] === 'photo');
+  const photoCol = photoHeader ? headers.indexOf(photoHeader) : -1;
+  const pics = await extractEmbeddedPhotos(arrayBuffer, photoCol);
+
   const students = [];
-  for (const row of rows) {
+  const embedded = {}; // student id -> image Blob
+  rows.forEach((row, i) => {
     const s = Object.fromEntries(FIELDS.map((f) => [f, '']));
     for (const [h, f] of Object.entries(headerMap)) s[f] = cellToString(row[h]);
-    if (FIELDS.every((f) => !s[f])) continue; // skip blank rows
+    const pic = pics.get(firstDataRow + i);
+    if (FIELDS.every((f) => !s[f]) && !pic) return; // skip blank rows
     s.id = crypto.randomUUID();
+    if (pic) embedded[s.id] = pic;
     students.push(s);
-  }
-  return { students, missingColumns, unknownColumns, sheetName };
+  });
+  return { students, missingColumns: missingColumns.filter((f) => !(f === 'photo' && Object.keys(embedded).length)), unknownColumns, sheetName, embedded };
 }

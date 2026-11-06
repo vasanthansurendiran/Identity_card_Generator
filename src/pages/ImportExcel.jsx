@@ -19,14 +19,17 @@ export default function ImportExcel() {
       return;
     }
     try {
-      const r = parseExcel(await f.arrayBuffer());
+      const r = await parseExcel(await f.arrayBuffer());
       if (!r.students.length) {
         setMsg({ t: 'danger', m: 'No student rows were found in the first sheet.' });
         return;
       }
       dispatch({ type: mode === 'replace' ? 'SET_STUDENTS' : 'APPEND_STUDENTS', students: r.students });
+      const nPics = Object.keys(r.embedded).length;
+      if (nPics) dispatch({ type: 'ASSIGN_PHOTOS', map: r.embedded });
       const warn = r.missingColumns.length ? ` Columns not found: ${r.missingColumns.map((c) => c.toUpperCase()).join(', ')}.` : '';
-      setMsg({ t: r.missingColumns.length ? 'warning' : 'success', m: `Imported ${r.students.length} students from "${f.name}".${warn}` });
+      const pics = nPics ? ` Found ${nPics} photographs embedded in the spreadsheet and attached them.` : '';
+      setMsg({ t: r.missingColumns.length ? 'warning' : 'success', m: `Imported ${r.students.length} students from "${f.name}".${pics}${warn}` });
     } catch (err) {
       setMsg({ t: 'danger', m: `Could not read that file: ${err.message}` });
     }

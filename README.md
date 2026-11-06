@@ -15,7 +15,7 @@ npm run build
 3. `.github/workflows/deploy.yml` builds with `VITE_BASE=/<repo-name>/` and publishes. Hash routing means refresh/deep links work.
 
 ## Excel columns
-`CLASS, ADMISSION, NAME, BLOOD, DOB, PARENT, CELL, BUS, ADDRESS, PHOTO` (matched by header, case-insensitive; common aliases accepted). Photos are matched to the PHOTO column by filename, ignoring case.
+`CLASS, ADMISSION, NAME, BLOOD, DOB, PARENT, CELL, BUS, ADDRESS, PHOTO` (matched by header, case-insensitive; common aliases accepted). Photos are matched to the PHOTO column by filename, ignoring case. Pictures embedded in the spreadsheet itself (Insert → Picture, placed on each student's row) are detected and attached automatically.
 
 ## Privacy
 Everything runs in the browser. No student data or photos are uploaded or stored (no localStorage); closing the tab clears it. `.gitignore` excludes `*.xlsx`, `sample/`, `private/`, photo folders. Only commit source and non-sensitive design assets (`public/assets`).

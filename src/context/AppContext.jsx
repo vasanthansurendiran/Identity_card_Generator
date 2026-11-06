@@ -36,7 +36,17 @@ function revoke(urls) {
 function reducer(state, a) {
   switch (a.type) {
     case 'SET_STUDENTS': {
-      return { ...state, students: a.students, generated: [], selected: [] };
+      revoke(Object.values(state.overrides));
+      return { ...state, students: a.students, overrides: {}, generated: [], selected: [] };
+    }
+    case 'ASSIGN_PHOTOS': {
+      // a.map: student id -> Blob (pictures embedded in the Excel file)
+      const overrides = { ...state.overrides };
+      for (const [id, blob] of Object.entries(a.map)) {
+        if (overrides[id]) revoke([overrides[id]]);
+        overrides[id] = URL.createObjectURL(blob);
+      }
+      return { ...state, overrides };
     }
     case 'APPEND_STUDENTS':
       return { ...state, students: [...state.students, ...a.students] };
